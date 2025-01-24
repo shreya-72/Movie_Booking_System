@@ -8,7 +8,7 @@ config = FlaskAppConfig()
 app = config.app      
 mysql = config.mysql 
 
-@app.route('/theater', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/entity', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def theater():
     obj = theater_class()
     table_name = "theater"
