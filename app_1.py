@@ -10,7 +10,7 @@ mysql = config.mysql
 
 @app.route('/entity', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def theater():
-    obj = theater_class()
+    obj = entity_class()
     table_name = "theater"
 
     if request.method == 'POST':
