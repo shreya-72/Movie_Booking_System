@@ -1,0 +1,81 @@
+abstract class
+automate class creation using dynamic attributes
+authorization variables instantiate in other class
+
+study bout fastapi
+
+
+
+instead of using '/insert_theater', '/display_theater', '/delete_theater', '/update_theater'.
+can I just use a single decorator/api as /theater and then pass arguments(update/insert/delete/update) in the respective functions of test.py 
+
+
+if 1 api, then only 1 function....if 
+
+
+Request failed with status code 500
+An error occurred: Expecting value: line 1 column 1 (char 0)
+return obj.display_theater(values,conditions)...return matters, just calling the function ain't enough
+
+            query_params = request.args.to_dict()
+            conditions = " AND ".join([f"{key} = %s" for key in query_params.keys()])
+            values = tuple(query_params.values())
+
+also had to ensure that query input parameters were passed to the reference function
+--------------------------------------------------------------------------------
+-> {'error': "name 'mysql' is not defined"}
+    def __init__(self):
+        # Initialize Flask app and MySQL connection
+        self.app = Flask(__name__)
+
+        # Configuring the MySQL database connection
+        self.app.config['MYSQL_HOST'] = 'localhost'
+        self.app.config['MYSQL_USER'] = 'root'
+        self.app.config['MYSQL_PASSWORD'] = 'demo123'
+        self.app.config['MYSQL_DB'] = 'movie_booking_system'
+
+        self.mysql = MySQL(self.app)  # Set the MySQL connection as an instance attribute
+
+Also, instead of using mysql.connection use self.mysql.connection
+---------------------------------------------------------------------
+  File "C:\Users\shreya.naik\Documents\Flask\theater\custom_class\theater.py", line 1, in <module>
+    from abstract import AbstractClass
+ModuleNotFoundError: No module named 'abstract'
+
+from .abstract import AbstractClass
+used .abstract instead of just abstract
+
+
+
+
+---------------------------------------------------
+Response Status Code: 500
+Response Data: {'error': 'theater_class.delete_theater() takes 1 positional argument but 2 were given'}
+
+def insert_theater(self, data):
+use self in function defintion parameter
+------------------------------------------------------------------------------
+
+    def insert_theater(self, data):
+        try:
+            # data = request.get_json()
+            theater_id = data.get('Theater_ID')
+            location = data.get('Location')
+            ratings = data.get('Ratings')
+            no_of_screens = data.get('No_of_screens')
+
+            cur = self.mysql.connection.cursor()
+
+            query = "INSERT INTO theater (theater_id, location,ratings,no_of_screens) VALUES (%s, %s,%s, %s)"
+            cur.execute(query, (theater_id, location, ratings, no_of_screens))
+
+            self.mysql.connection.commit()
+
+            cur.close()
+
+            return jsonify({"message": "Order added successfully!"}), 201
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+is it possible to make this dynamic, that is iterate through data json object to extract the attribute names and attribute values. we do not know the number of attributes.
+Thereby build a highly dynamic querey where we do not know the number or names of the attribute explicitly bt can be extracted via 'data' json object
