@@ -2,7 +2,7 @@ from custom_class.app_config import FlaskAppConfig
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 
-from custom_class.theater import theater_class
+from custom_class.theater import entity_class
 
 config = FlaskAppConfig() 
 app = config.app      
